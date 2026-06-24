@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Three live email signatures, one challenge — bridge-work.ai</title>
+<meta name="description" content="I built three live email signatures: a radio station's now-playing, Hacker News' top story, the World Cup's last three results. Then I threw a challenge to the M365 community.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Inter:wght@400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --ink: #050505;
+    --paper: #f5f2ec;
+    --muted: #5a5651;
+    --govern: #8a5ac4;
+    --onair: #d4416b;
+    --challenge: #d4416b;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--paper); color: var(--ink); }
+  body { font-family: 'Inter', system-ui, sans-serif; font-weight: 400; line-height: 1.6; font-size: 17px; }
+  .wrap { max-width: 660px; margin: 0 auto; padding: 56px 24px 96px; }
+
+  .topbar { display: flex; align-items: center; justify-content: space-between; font-family: 'DM Mono', monospace; font-size: 12px; letter-spacing: .04em; color: var(--ink); margin-bottom: 80px; }
+  .topbar a { color: var(--ink); text-decoration: none; }
+  .topbar .home { font-weight: 500; }
+
+  .eyebrow { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--ink); margin-bottom: 20px; }
+
+  h1 { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 44px; line-height: 1.05; letter-spacing: -.02em; margin: 0 0 28px; }
+  .dek { font-family: 'Space Grotesk', sans-serif; font-weight: 300; font-size: 22px; line-height: 1.35; letter-spacing: -.01em; color: var(--ink); margin: 0 0 48px; max-width: 580px; }
+  h2 { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 28px; line-height: 1.1; letter-spacing: -.01em; margin: 64px 0 16px; }
+  h3 { font-family: 'Space Grotesk', sans-serif; font-weight: 500; font-size: 18px; margin: 32px 0 8px; }
+
+  p { margin: 0 0 18px; }
+  p strong { font-weight: 700; }
+  a { color: var(--ink); text-decoration: underline; text-decoration-thickness: 1.5px; text-underline-offset: 3px; }
+  a:hover { background: var(--ink); color: var(--paper); text-decoration: none; }
+
+  hr { border: 0; border-top: 1.5px solid var(--ink); margin: 64px 0; }
+
+  .demo { background: #fff; border: 1.5px solid var(--ink); padding: 28px; margin: 32px 0; }
+  .demo img { display: block; max-width: 100%; height: auto; }
+  .demo .caption { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: .04em; color: var(--muted); margin-top: 14px; }
+
+  .arch { display: grid; grid-template-columns: 1fr; gap: 0; margin: 24px 0 8px; border: 1.5px solid var(--ink); }
+  .arch-row { display: grid; grid-template-columns: 120px 1fr; border-bottom: 1px solid var(--ink); }
+  .arch-row:last-child { border-bottom: none; }
+  .arch-row .label { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; padding: 16px 18px; border-right: 1px solid var(--ink); background: var(--ink); color: var(--paper); display: flex; align-items: center; }
+  .arch-row .what { font-family: 'Inter', sans-serif; font-size: 15px; padding: 16px 18px; }
+  code { font-family: 'DM Mono', monospace; font-size: 0.93em; background: var(--ink); color: var(--paper); padding: 1px 5px; }
+
+  ul.cases { list-style: none; padding: 0; margin: 0 0 12px; }
+  ul.cases li { padding: 22px 0; border-top: 1px solid var(--ink); }
+  ul.cases li:last-child { border-bottom: 1px solid var(--ink); }
+  ul.cases .num { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 32px; letter-spacing: -.02em; line-height: 1; display: inline-block; margin-right: 14px; vertical-align: -2px; }
+  ul.cases .head { font-family: 'Space Grotesk', sans-serif; font-weight: 500; font-size: 18px; }
+  ul.cases .status { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: .12em; text-transform: uppercase; padding: 3px 7px; margin-left: 8px; vertical-align: 4px; }
+  ul.cases .built { background: var(--ink); color: var(--paper); }
+  ul.cases .grounded { background: transparent; color: var(--ink); border: 1px solid var(--ink); }
+  ul.cases .challenge { background: var(--challenge); color: #fff; }
+  ul.cases p { margin: 10px 0 0; font-size: 16px; color: var(--ink); }
+
+  .tbl { width: 100%; border-collapse: collapse; margin: 16px 0 24px; font-size: 14px; }
+  .tbl th, .tbl td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--ink); vertical-align: top; }
+  .tbl th { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; font-weight: 500; border-bottom: 1.5px solid var(--ink); }
+  .tbl tr:last-child td { border-bottom: 1.5px solid var(--ink); }
+  .tbl code { font-size: 12px; padding: 1px 4px; }
+
+  /* Challenge block — the active call */
+  .challenge-block { background: var(--ink); color: var(--paper); padding: 32px; margin: 48px 0; }
+  .challenge-block .challenge-label { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--challenge); margin-bottom: 16px; }
+  .challenge-block h3 { color: var(--paper); margin-top: 0; font-size: 22px; }
+  .challenge-block p { color: var(--paper); }
+  .challenge-block a { color: var(--paper); text-decoration-color: var(--challenge); text-decoration-thickness: 2px; }
+  .challenge-block a:hover { background: var(--challenge); color: var(--ink); }
+  .challenge-block code { background: var(--paper); color: var(--ink); }
+
+  .seam { border-left: 4px solid var(--govern); padding: 4px 0 4px 24px; margin: 40px 0; }
+  .seam .seam-label { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--govern); margin-bottom: 10px; }
+  .seam p { font-family: 'Space Grotesk', sans-serif; font-weight: 300; font-size: 20px; line-height: 1.4; margin: 0; }
+
+  .colophon { margin-top: 80px; padding-top: 32px; border-top: 1.5px solid var(--ink); font-family: 'DM Mono', monospace; font-size: 12px; letter-spacing: .04em; color: var(--muted); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+  .colophon a { color: var(--ink); }
+
+  .mark { font-family: 'DM Mono', monospace; font-weight: 500; }
+  .onair { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--onair); vertical-align: middle; margin-right: 6px; animation: pulse 1.6s infinite; }
+  @keyframes pulse { 0%,100% { opacity: 1 } 50% { opacity: .25 } }
+
+  @media (max-width: 600px) {
+    h1 { font-size: 34px; }
+    .dek { font-size: 19px; }
+    .arch-row { grid-template-columns: 96px 1fr; }
+    .arch-row .label { font-size: 10px; padding: 12px 12px; }
+    .arch-row .what { font-size: 14px; padding: 12px 14px; }
+    .challenge-block { padding: 24px; }
+  }
+</style>
+</head>
+<body>
+<main class="wrap">
+
+  <div class="topbar">
+    <a class="home" href="https://bridge-work.ai">bridge-work.ai</a>
+    <a href="https://bridge-work.ai/lab">/lab</a>
+  </div>
+
+  <div class="eyebrow">Notebook · A small experiment</div>
+
+  <h1>Three live email signatures, one challenge.</h1>
+
+  <p class="dek">I built three tiny things this weekend. Then I noticed what they all are — and what they aren't yet.</p>
+
+  <p>The thing in front: a live badge for <a href="https://gds.fm/">GDS.FM</a>, my favorite Zürich radio station. Open my email, the badge shows what's playing right now. <span class="mark">\o/</span> marks the spot.</p>
+
+  <div class="demo">
+    <img src="https://go.bridge-work.ai/gds.svg?u=achim" alt="Live now-playing badge for GDS.FM" width="540" height="120">
+    <div class="caption"><span class="onair"></span>Live. Refresh the page and the track changes.</div>
+  </div>
+
+  <p>The tech is unremarkable. A Cloudflare Worker proxies the station's now-playing API, bakes the current track into an SVG, serves it as an image. Cache 25 seconds. ~100 lines of code.</p>
+
+  <h2>What the build is</h2>
+
+  <p>A signature used to be a static artifact. Name, role, link, done. Written once, stale for two years.</p>
+
+  <p>This one is generative. Every time someone opens the email, an interface gets assembled for that moment, from live context. Same <code>&lt;img&gt;</code> tag email clients have rendered since 1998. Different shape underneath.</p>
+
+  <p>To prove the pattern holds across sources, I added two more.</p>
+
+  <hr>
+
+  <h2>Three sources, same shape</h2>
+
+  <ul class="cases">
+    <li>
+      <span class="num">01</span><span class="head">A radio station's now-playing track</span><span class="status built">Built</span>
+      <p>The original. Airtime API → Worker → SVG. The example above.</p>
+    </li>
+  </ul>
+
+  <ul class="cases">
+    <li>
+      <span class="num">02</span><span class="head">Top of Hacker News</span><span class="status built">Built</span>
+      <p>Same Worker, second route. RSS feed instead of Airtime. ~30 extra lines.</p>
+    </li>
+  </ul>
+
+  <div class="demo">
+    <img src="https://go.bridge-work.ai/news.svg" alt="Live Hacker News top story badge" width="540" height="120">
+    <div class="caption"><span class="onair"></span>Top of HN, right now. The badge updates when the front page does.</div>
+  </div>
+
+  <p>Hacker News is the demo source. The interesting move is to point this at <strong>your team's internal context</strong> — the Confluence updates your colleagues already wrote, the GitHub releases your team already shipped. Below: where the URL lives across business platforms.</p>
+
+  <table class="tbl">
+    <thead><tr><th>Platform</th><th>RSS / feed endpoint</th></tr></thead>
+    <tbody>
+      <tr><td>Confluence Cloud (per space)</td><td><code>/wiki/spaces/{KEY}/blog.rss</code></td></tr>
+      <tr><td>SharePoint News</td><td><code>/_layouts/15/listfeed.aspx?List={GUID}</code></td></tr>
+      <tr><td>GitHub releases</td><td><code>github.com/{org}/{repo}/releases.atom</code></td></tr>
+      <tr><td>Atlassian Statuspage</td><td><code>{page}.statuspage.io/history.rss</code></td></tr>
+      <tr><td>Notion (published page)</td><td>via super.so or notion-to-rss</td></tr>
+      <tr><td>Jira issues</td><td><code>jira issueviews search XML feed</code></td></tr>
+      <tr><td>Astro / Hugo / Ghost blog</td><td><code>/rss.xml</code></td></tr>
+    </tbody>
+  </table>
+
+  <p>Internal Confluence needs OAuth. Public sources need nothing. Either way: same Worker, same ~30 lines, different URL in one constant.</p>
+
+  <ul class="cases">
+    <li>
+      <span class="num">03</span><span class="head">Latest three World Cup results</span><span class="status built">Built</span>
+      <p>Same Worker, third route. <a href="https://www.thesportsdb.com/">TheSportsDB</a> free API. The 2026 World Cup is live as I write this — Switzerland plays Canada tonight.</p>
+    </li>
+  </ul>
+
+  <div class="demo">
+    <img src="https://go.bridge-work.ai/worldcup.svg" alt="World Cup latest results badge" width="540" height="178">
+    <div class="caption"><span class="onair"></span>Last three results from FIFA World Cup 2026. Same for everyone who opens the email.</div>
+  </div>
+
+  <p>Three sources, three signatures, one Worker. The first two are recommendations to readers (listen to this, read this). The third is a quiet announcement — "I'm following the tournament too." Every recipient sees the same thing. <strong>That's the boring version.</strong></p>
+
+  <hr>
+
+  <h2>The interesting version is the one I didn't build</h2>
+
+  <p>Static is fine. Static is shipped. But the actually interesting move is when "the same thing for everyone" becomes "different for each recipient."</p>
+
+  <p>Imagine the World Cup badge again. But at send time, an agent reads who the email is going to, checks their country, picks the relevant context. "Hopp Schwiiz" with last night's score for a Swiss colleague. "Forza Italia" for a partner in Milan. A neutral "enjoy the tournament" otherwise. Same email, different signature, per person.</p>
+
+  <p>That's a 2–3 day build in an M365 tenant. The components are known.</p>
+
+  <div class="arch">
+    <div class="arch-row"><div class="label">Trigger</div><div class="what">Outlook Web Add-in with <code>OnMessageSend</code> event handler. Tenant-deployable via M365 Admin Center.</div></div>
+    <div class="arch-row"><div class="label">Orchestration</div><div class="what">Copilot Studio agent OR Power Automate flow OR Azure Function. Copilot Studio is fastest; Azure Function is leanest at runtime.</div></div>
+    <div class="arch-row"><div class="label">Recipient ctx</div><div class="what">Microsoft Graph for internal (<code>/users/{email}/profile</code>); public lookup for external.</div></div>
+    <div class="arch-row"><div class="label">Generation</div><div class="what">Azure OpenAI. One call per unique recipient country per day, cached.</div></div>
+    <div class="arch-row"><div class="label">Audit</div><div class="what">Application Insights. Recipient list and greeting block logged; email content is not.</div></div>
+  </div>
+
+  <p>One architectural constraint to know first: Outlook's signature is a <strong>client-side setting</strong>. You can't dynamically rewrite the signature field per recipient from inside Outlook's built-in feature. Either an Outlook Web Add-in modifies the email body at send time (transparent to the sender), or a server-side rule rewrites on the way out (cleaner for compliance, less visible). For something this user-facing, the add-in path is right.</p>
+
+  <div class="challenge-block">
+    <div class="challenge-label">A challenge</div>
+    <h3>M365 and Copilot consultants — your weekend.</h3>
+    <p>I built the boring version. Three signatures, same data for everyone, ~250 lines of Worker code. It works. Ship it. Move on.</p>
+    <p>The version I want to see is the per-recipient one. World Cup is the demo — pick any context source you like. The badge changes based on who's reading.</p>
+    <p>The components are listed above. The architecture writeup is on this page. The data sources are public. The remaining work is the part where you actually know more than I do: deploying an add-in in a tenant, wiring Copilot Studio or an Azure Function, and making the consent and audit story coherent.</p>
+    <p><strong>If you ship a working tenant deployment this week, tag me. The first one I see working gets a writeup on <a href="https://bridge-work.ai/lab">bridge-work.ai/lab</a>.</strong></p>
+    <p>I am genuinely curious which of you ships first. And I am genuinely curious whose consent and audit pattern is the most honest.</p>
+  </div>
+
+  <hr>
+
+  <h2>Of course this isn't really about football</h2>
+
+  <p>The tournament is a vivid example because it is happening this month. The pattern has nothing to do with sport.</p>
+
+  <p>Sent to a regulatory authority instead of a partner, the same dynamic block can append the relevant compliance reference per jurisdiction. Sent to a customer instead of a colleague, it can surface the case study that matches their industry. In a multilingual organisation, it can greet in the recipient's working language with their region's latest internal update. Sent by sales, it can carry the most recent piece of evidence relevant to the recipient's stage in the pipeline. Sent by a customer success lead, it can show the latest help-centre article in the right language.</p>
+
+  <p>These aren't decorations. They're the difference between a signature that says "I exist" and one that says "I read what you're about to read."</p>
+
+  <div class="seam">
+    <div class="seam-label">The seam</div>
+    <p>The moment context flows through send-time orchestration, the questions stop being UX questions. Consent. Audit. Fallback. Override. Data residency. Who saw what, generated against which input. That's the actual governance surface of generative interfaces inside a regulated organisation — and what most demos quietly skip.</p>
+  </div>
+
+  <p>These aren't blockers. They are the product surface. They are also the reason I think the per-recipient signature is more than a toy. The toy version, the one I'd build for fun, is World Cup greetings. The version a regulated organisation can actually ship needs the consent flow named, the audit log retained, the failure mode rehearsed.</p>
+
+  <p>That's the part I think about for a living.</p>
+
+  <hr>
+
+  <h2>Pattern, restated</h2>
+
+  <p>The same shape works for all three built versions, and for the one I didn't build:</p>
+
+  <div class="arch">
+    <div class="arch-row"><div class="label">Source</div><div class="what">Airtime · RSS · TheSportsDB · or your Confluence, your CRM, your recipient</div></div>
+    <div class="arch-row"><div class="label">Compute</div><div class="what">Cloudflare Worker · Power Automate · Copilot Studio · Azure Function</div></div>
+    <div class="arch-row"><div class="label">Render</div><div class="what">An <code>&lt;img&gt;</code> tag. Or, with a send-time add-in, an HTML block injected before send.</div></div>
+    <div class="arch-row"><div class="label">Governance</div><div class="what">For toys: Cloudflare defaults. For production: consent, audit, fallback, override, residency.</div></div>
+  </div>
+
+  <p>The Lego brick is cheap. The interesting question across all four versions isn't "can we." It's where the new surface meets old governance. That is the seam.</p>
+
+  <p>That's the part I think about for a living. But the toys work. And toys are how I find the seams.</p>
+
+  <p>The radio plays. Hacker News updates. The World Cup ships goals. <span class="mark">\o/</span></p>
+
+  <h2>Try it</h2>
+
+  <p>The whole thing is on <a href="https://github.com/blackmath88/gds-badge">GitHub</a>. One Worker file, three demo routes, ~250 lines. Fork it, point the source URLs at anything. Or — if you're a Copilot consultant — start with the M365 architecture above and let me see what you ship.</p>
+
+  <div class="colophon">
+    <span>bridge-work.ai · Notebook</span>
+    <span><a href="https://github.com/blackmath88/gds-badge">github</a> &nbsp; <a href="https://gds.fm/">gds.fm</a> &nbsp; <a href="https://www.thesportsdb.com/">thesportsdb</a></span>
+  </div>
+
+</main>
+</body>
+</html>

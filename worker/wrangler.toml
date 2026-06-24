@@ -1,0 +1,13 @@
+name = "signature-lab"
+main = "worker.js"
+compatibility_date = "2026-06-01"
+
+# Set up the custom domain in Cloudflare dashboard:
+# Workers & Pages → signature-lab → Triggers → Custom Domains → Add
+# Enter: go.bridge-work.ai
+#
+# DNS auto-configures since bridge-work.ai is on Cloudflare.
+
+[[analytics_engine_datasets]]
+binding = "GDS_CLICKS"
+dataset = "signature_clicks"

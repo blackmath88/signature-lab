@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>I listen to GDS.FM while I work. You should too.</title>
+<meta name="description" content="A live badge that shows what's playing on GDS.FM right now. Drop it in your email signature, your bio, your README — and pass on a great Zürich radio station.">
+
+<meta property="og:title" content="I listen to GDS.FM while I work.">
+<meta property="og:description" content="A live badge that shows what's playing right now. Tell a friend.">
+<meta property="og:image" content="https://go.bridge-work.ai/gds.svg">
+<meta property="og:type" content="website">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --ink: #000;
+    --paper: #ffffff;
+    --muted: #666;
+    --accent: #FF3B30;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--paper); color: var(--ink); }
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-weight: 400;
+    line-height: 1.5;
+    font-size: 17px;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 640px; margin: 0 auto; padding: 48px 24px 72px; }
+
+  /* Header */
+  header { display: flex; align-items: center; gap: 16px; margin-bottom: 56px; }
+  .mark-box {
+    display: flex; align-items: center; justify-content: center;
+    width: 56px; height: 56px;
+    border: 2.5px solid var(--ink);
+    font-family: 'DM Mono', monospace;
+    font-weight: 700;
+    font-size: 22px;
+    line-height: 1;
+  }
+  .station {
+    font-family: 'Inter', sans-serif;
+    font-weight: 900;
+    font-size: 22px;
+    letter-spacing: -.02em;
+    margin: 0;
+  }
+  .station-sub {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 12px;
+    color: var(--ink);
+    margin-top: 2px;
+  }
+
+  /* Hero */
+  h1 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 900;
+    font-size: 56px;
+    line-height: 1;
+    letter-spacing: -.04em;
+    margin: 0 0 32px;
+  }
+  .dek {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 1.35;
+    margin: 0 0 48px;
+    max-width: 540px;
+  }
+
+  /* Badge demo */
+  .badge-frame {
+    border: 2.5px solid var(--ink);
+    padding: 24px;
+    margin: 0 0 32px;
+    background: var(--paper);
+  }
+  .badge-frame img { display: block; max-width: 100%; height: auto; margin: 0 auto; }
+  .badge-caption {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: .04em;
+    color: var(--muted);
+    margin-top: 14px;
+    text-align: center;
+  }
+  .onair {
+    display: inline-block;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    vertical-align: middle;
+    margin-right: 6px;
+    animation: pulse 1.6s infinite;
+  }
+  @keyframes pulse { 0%,100% { opacity: 1 } 50% { opacity: .25 } }
+
+  /* Body */
+  h2 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 900;
+    font-size: 28px;
+    letter-spacing: -.02em;
+    margin: 64px 0 16px;
+  }
+  p { margin: 0 0 18px; }
+  p strong { font-weight: 700; }
+  a {
+    color: var(--ink);
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 4px;
+  }
+  a:hover { background: var(--ink); color: var(--paper); text-decoration: none; }
+  a.accent { text-decoration-color: var(--accent); }
+
+  /* Snippet */
+  .snippet {
+    background: #f5f5f5;
+    border: 1.5px solid var(--ink);
+    padding: 16px;
+    margin: 12px 0;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    line-height: 1.5;
+    word-break: break-all;
+    white-space: pre-wrap;
+    position: relative;
+  }
+  .copy-btn {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: var(--ink);
+    color: var(--paper);
+    border: none;
+    padding: 6px 10px;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+  .copy-btn:hover { background: var(--accent); }
+  .copy-btn.copied { background: #2a7a3e; }
+
+  .variants-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--ink);
+    margin: 32px 0 8px;
+    font-weight: 500;
+  }
+
+  /* CTA buttons */
+  .cta-row { display: flex; flex-wrap: wrap; gap: 12px; margin: 24px 0 8px; }
+  .cta {
+    display: inline-block;
+    background: var(--ink);
+    color: var(--paper);
+    padding: 14px 20px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    text-decoration: none;
+    border: 2.5px solid var(--ink);
+  }
+  .cta:hover { background: var(--paper); color: var(--ink); text-decoration: none; }
+  .cta.outline { background: var(--paper); color: var(--ink); }
+  .cta.outline:hover { background: var(--ink); color: var(--paper); }
+
+  /* Footer */
+  footer {
+    margin-top: 80px;
+    padding-top: 24px;
+    border-top: 1px solid var(--ink);
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: .04em;
+    color: var(--muted);
+  }
+  footer a { color: var(--ink); text-decoration-thickness: 1px; }
+
+  @media (max-width: 600px) {
+    h1 { font-size: 40px; }
+    .dek { font-size: 18px; }
+    h2 { font-size: 22px; }
+    .station { font-size: 18px; }
+  }
+</style>
+</head>
+<body>
+<main class="wrap">
+
+  <header>
+    <div class="mark-box">\o/</div>
+    <div>
+      <div class="station">GDS.FM</div>
+      <div class="station-sub">Zürichs Radio gegen den Strom</div>
+    </div>
+  </header>
+
+  <h1>I listen to GDS.FM while I work.</h1>
+
+  <p class="dek">You probably should too. So I built this little badge that shows what's spinning right now. Drop it in your email signature, your README, your bio — wherever images render. Every time someone opens it, the track updates.</p>
+
+  <div class="badge-frame">
+    <img src="https://go.bridge-work.ai/gds.svg" alt="Live now-playing badge for GDS.FM" width="540" height="120">
+    <div class="badge-caption"><span class="onair"></span>Live. Refresh and the track changes.</div>
+  </div>
+
+  <p><a href="https://gds.fm/" class="accent">GDS.FM</a> is volunteer-run, ad-free, and the best radio in Zürich. Live shows Wednesday to Saturday from the bar-and-studio on Anwandstrasse, plus handpicked setblocks the rest of the time. If you also love it: become a member. If you can't, share the badge with someone who'd dig it.</p>
+
+  <p><strong>Be a friend. Tell a friend.</strong></p>
+
+  <div class="cta-row">
+    <a href="https://gds.fm/" class="cta">Visit GDS.FM</a>
+    <a href="#use-it" class="cta outline">Grab the badge</a>
+  </div>
+
+  <h2 id="use-it">Use it yourself</h2>
+
+  <p>Pick the format that fits where you're putting it. All variants route clicks through a tiny redirect that adds a fun little timestamp ping and sends you straight to gds.fm.</p>
+
+  <div class="variants-label">For email signatures, websites, anywhere HTML</div>
+  <div class="snippet" id="snip-html"><button class="copy-btn" data-target="snip-html">Copy</button>&lt;a href="https://go.bridge-work.ai/gds"&gt;
+  &lt;img src="https://go.bridge-work.ai/gds.svg"
+       alt="I'm listening to GDS.FM"
+       width="540" height="120"&gt;
+&lt;/a&gt;</div>
+
+  <div class="variants-label">For GitHub READMEs, Markdown anywhere</div>
+  <div class="snippet" id="snip-md"><button class="copy-btn" data-target="snip-md">Copy</button>[![GDS.FM](https://go.bridge-work.ai/gds.svg)](https://go.bridge-work.ai/gds)</div>
+
+  <div class="variants-label">Compact pill variant (smaller footprint)</div>
+  <div class="snippet" id="snip-pill"><button class="copy-btn" data-target="snip-pill">Copy</button>&lt;a href="https://go.bridge-work.ai/gds"&gt;
+  &lt;img src="https://go.bridge-work.ai/gds.svg?style=pill"
+       alt="GDS.FM" height="34"&gt;
+&lt;/a&gt;</div>
+
+  <h2>Or fork it</h2>
+
+  <p>The whole thing is one tiny Cloudflare Worker. Point it at any radio station's now-playing API and you have a live badge for any station. The code is on <a href="https://github.com/blackmath88/signature-lab">GitHub</a>. MIT license. Take it, make one for your favorite station.</p>
+
+  <p>If you do — please send me what you built. <span style="opacity:.6;">\o/</span></p>
+
+  <footer>
+    <div>Made with affection by Achim at <a href="https://bridge-work.ai">bridge-work.ai</a>. Not affiliated with GDS.FM — just a listener.</div>
+    <div style="margin-top:8px;">Code: <a href="https://github.com/blackmath88/signature-lab">github.com/blackmath88/signature-lab</a></div>
+  </footer>
+
+</main>
+
+<script>
+  // Copy-to-clipboard for snippets
+  document.querySelectorAll('.copy-btn').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const target = document.getElementById(btn.dataset.target);
+      // Get text excluding the button itself
+      const text = Array.from(target.childNodes)
+        .filter(n => n.nodeType === Node.TEXT_NODE || (n.nodeType === Node.ELEMENT_NODE && n.tagName !== 'BUTTON'))
+        .map(n => n.textContent)
+        .join('');
+      try {
+        await navigator.clipboard.writeText(text.trim());
+        btn.textContent = 'Copied';
+        btn.classList.add('copied');
+        setTimeout(() => {
+          btn.textContent = 'Copy';
+          btn.classList.remove('copied');
+        }, 1800);
+      } catch (e) {
+        btn.textContent = 'Failed';
+      }
+    });
+  });
+</script>
+</body>
+</html>
