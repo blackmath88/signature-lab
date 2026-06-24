@@ -2,6 +2,10 @@ name = "signature-lab"
 main = "worker.js"
 compatibility_date = "2026-06-01"
 
+routes = [
+  { pattern = "go.bridge-work.ai", custom_domain = true }
+]
+
 # Set up the custom domain in Cloudflare dashboard:
 # Workers & Pages → signature-lab → Triggers → Custom Domains → Add
 # Enter: go.bridge-work.ai
