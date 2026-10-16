@@ -1,4 +1,15 @@
+<!-- BEGIN public-repo-header -->
+<div align="center">
+
 # signature-lab
+
+<a href="https://github.com/blackmath88/signature-lab"><img alt="Primary language: HTML" src="https://img.shields.io/badge/language-HTML-526078?style=flat"></a>
+<a href="https://github.com/blackmath88/signature-lab#readme"><img alt="README" src="https://img.shields.io/badge/docs-readme-16796f?style=flat"></a>
+<a href="https://github.com/blackmath88/signature-lab/blob/main/LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-737373?style=flat"></a>
+<a href="https://github.com/blackmath88/signature-lab/commits/main"><img alt="Last commit" src="https://img.shields.io/github/last-commit/blackmath88/signature-lab?style=flat&amp;color=737373"></a>
+
+</div>
+<!-- END public-repo-header -->
 
 A tiny Cloudflare Worker that powers three live email-signature badges — and a writeup on what changes when signatures stop being static.
 
